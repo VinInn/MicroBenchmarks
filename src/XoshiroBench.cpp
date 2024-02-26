@@ -53,7 +53,7 @@ void doTestV(Engine & engine)
 
 int main()
 {
-#ifdef __AVX512__
+#ifdef __AVX512F__
  std::cout << "avx512 supported" << std::endl;
 #endif
 
