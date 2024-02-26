@@ -14,7 +14,7 @@
    a 64-bit seed, we suggest to seed a splitmix64 generator and use its
    output to fill s. */
 
-ifdef __AVX512F__
+#ifdef __AVX512F__
 typedef uint64_t XoshiroVector __attribute__ ((vector_size (64)));
 #elif __AVX2__
 typedef uint64_t XoshiroVector __attribute__ ((vector_size (32)));
