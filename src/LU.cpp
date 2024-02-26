@@ -1,3 +1,10 @@
+/* LU micro benchmark
+ *
+ * original version
+ * SciMark2 Numeric Benchmark, http://math.nist.gov/scimark
+ *
+ */
+
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
