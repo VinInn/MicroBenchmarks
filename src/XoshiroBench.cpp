@@ -23,6 +23,34 @@ void fillBits(int64_t * v, uint64_t x) {
 
 
 #include <typeinfo>
+void doTestSoA()
+{
+
+      std::cout << "Testing engine with SoA "  << typeid(XoshiroType::TwoSums).name() << ' ' << std::endl;
+
+
+      xoshiroRNG::SOA<32> soa;
+      for ( auto & v : soa.v) v = (uint64_t*)malloc(soa.size*sizeof(uint64_t));
+      xoshiroRNG::setSeed(soa,0);
+      auto fgen = [&](uint32_t const * __restrict__ dummy, float *__restrict__ out, int N) {
+           auto f = [&](int i, uint64_t r) { out[i] = r;};
+           xoshiroRNG::loop<XoshiroType::TwoSums>(soa, f, N);
+      };
+
+      int N = 32 * 1000 * 1000;
+      benchmark::TimeIt bench;
+      // fill in batch of 256
+      float rv[256];
+      uint32_t dummy[1];
+      for (int i = 0; i < N; ++i) {
+        bench(fgen, dummy, rv, 256);
+      }
+
+      std::cout << "duration " << bench.lap() << std::endl;
+
+}
+
+
 template<typename Engine>
 void doTestV(Engine & engine)
 {
@@ -61,10 +89,12 @@ int main()
  std::cout << "avx2 supported" << std::endl;
 #endif
 
-
+#ifdef TESTSOA 
+  doTestSoA();
+#else
    XoshiroPP xoshiroppV;
-
    doTestV(xoshiroppV);
+#endif
    return 0;
 }
 
