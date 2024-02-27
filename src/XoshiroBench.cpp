@@ -26,7 +26,7 @@ void fillBits(int64_t * v, uint64_t x) {
 void doTestSoA()
 {
 
-      // each generation is 16 int ops
+      // each generation is 14 int ops (10 if rotations (rol/ror) are present)
       std::cout << "Testing engine with SoA "  << typeid(XoshiroType::TwoSums).name() << ' ' << std::endl;
 
 
@@ -48,7 +48,7 @@ void doTestSoA()
         bench(fgen, dummy, rv, 256);
       }
 
-      std::cout << N*256*16 << " int ops" << std::endl;
+      std::cout << N*256*14 << " int ops" << std::endl;
       std::cout << "duration " << bench.lap() << std::endl;
 
 }
@@ -77,7 +77,7 @@ void doTestV(Engine & engine)
            bench(gen, dummy, rv, 256);
       }
       
-      std::cout << N*256*16 << " int ops" << std::endl;
+      std::cout << N*256*14 << " int ops" << std::endl;
       std::cout << "duration " << bench.lap() << std::endl;
 
 
@@ -95,6 +95,9 @@ int main()
 
 #ifdef TESTSOA 
   doTestSoA();
+#elif TESTSCALAR
+   Xoshiro<XoshiroType::TwoSums,uint64_t> xoshiroppS;
+   doTestV(xoshiroppS);
 #else
    XoshiroPP xoshiroppV;
    doTestV(xoshiroppV);
