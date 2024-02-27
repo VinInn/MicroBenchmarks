@@ -26,6 +26,7 @@ void fillBits(int64_t * v, uint64_t x) {
 void doTestSoA()
 {
 
+      // each generation is 16 int ops
       std::cout << "Testing engine with SoA "  << typeid(XoshiroType::TwoSums).name() << ' ' << std::endl;
 
 
@@ -33,11 +34,12 @@ void doTestSoA()
       for ( auto & v : soa.v) v = (uint64_t*)malloc(soa.size*sizeof(uint64_t));
       xoshiroRNG::setSeed(soa,0);
       auto fgen = [&](uint32_t const * __restrict__ dummy, float *__restrict__ out, int N) {
-           auto f = [&](int i, uint64_t r) { out[i] = r;};
-           xoshiroRNG::loop<XoshiroType::TwoSums>(soa, f, N);
+        auto f = [&](int i, uint64_t r) { out[i] = r;};
+         xoshiroRNG::loop<XoshiroType::TwoSums>(soa, f, N);
+         // for(int k=0; k<soa.size; ++k) out[k] = xoshiroRNG::next<XoshiroType::TwoSums>(soa,k);
       };
 
-      int N = 32 * 1000 * 1000;
+      long long N = 32 * 1000 * 1000;
       benchmark::TimeIt bench;
       // fill in batch of 256
       float rv[256];
@@ -46,6 +48,7 @@ void doTestSoA()
         bench(fgen, dummy, rv, 256);
       }
 
+      std::cout << N*256*16 << " int ops" << std::endl;
       std::cout << "duration " << bench.lap() << std::endl;
 
 }
@@ -56,7 +59,7 @@ void doTestV(Engine & engine)
 {
   
   std::cout << "Testing vector engine "  << typeid(engine).name() << ' ' << Engine::vector_size << std::endl;
-  int N = 32 * 1000 * 1000;
+  long long N = 32 * 1000 * 1000;
 
   auto gen = [&](uint64_t const*, uint64_t * r, int N) {
     for (int i=0; i<N; i+=Engine::vector_size) {
@@ -73,7 +76,8 @@ void doTestV(Engine & engine)
       for (int i = 0; i < N; ++i) {
            bench(gen, dummy, rv, 256);
       }
-
+      
+      std::cout << N*256*16 << " int ops" << std::endl;
       std::cout << "duration " << bench.lap() << std::endl;
 
 
