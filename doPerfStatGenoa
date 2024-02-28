@@ -15,8 +15,8 @@ perf stat -D $1 \
 -e packed_int_op_type.all \
 -e fp_ret_sse_avx_ops.all \
 -e fp_ret_sse_avx_ops.add_sub_flops \
--e fp_ret_sse_avx_ops.mac_flops \
 -e fp_ret_sse_avx_ops.mult_flops \
+-e fp_ret_sse_avx_ops.mac_flops \
 -e fp_ret_sse_avx_ops.div_flops \
 -e fp_ops_retired_by_width.all \
 -e fp_ops_retired_by_width.mmx_uops_retired \

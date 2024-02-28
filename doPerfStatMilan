@@ -8,8 +8,8 @@ perf stat -D $1 \
 -e fp_num_mov_elim_scal_op.sse_mov_ops \
 -e fp_num_mov_elim_scal_op.sse_mov_ops_elim \
 -e fp_ret_sse_avx_ops.add_sub_flops \
--e fp_ret_sse_avx_ops.mac_flops \
 -e fp_ret_sse_avx_ops.mult_flops \
+-e fp_ret_sse_avx_ops.mac_flops \
 -e fp_ret_sse_avx_ops.div_flops \
 -e de_dis_cops_from_decoder.disp_op_type.any_fp_dispatch \
 -e de_dis_cops_from_decoder.disp_op_type.any_integer_dispatch \
