@@ -5,6 +5,7 @@
  *
  */
 
+#include "benchmark.h"
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
@@ -42,17 +43,24 @@ int LU_factor(int M, int N, double **A, int *pivot);
           lu[i] = &luS[i*N];
 
         for (auto & a : A)  a = dis(gen);
-        
         int res = 0;
+        auto run = [&](double const*, double ** M, int N) {
+            res |= LU_factor(N, N, M, pivot.data());
+        };
+
+        double dummy[1];
+        benchmark::TimeIt bench;
         for (i=0; i<cycles; i++)
             {
                 std::copy(A.begin(),A.end(),luS.begin());
-                res |= LU_factor(N, N, lu.data(), pivot.data());
+                // res |= LU_factor(N, N, lu.data(), pivot.data());
+                bench(run, dummy, lu.data(),N);
             }
         /* approx Mflops */
         result = LU_num_flops(N) * cycles;
 
         if (res) std::cout << "problem with LU" << std::endl;
+        std::cout << "duration " << bench.lap() << std::endl;
         return result;
 
     }
