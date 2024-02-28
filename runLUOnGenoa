@@ -1,0 +1,19 @@
+
+c++ -Wall -Ofast -march=x86-64-v4 src/LU.cpp -mprefer-vector-width=512
+./doPerfStatGenoa 100 ./a.out >& data/LUv4w512
+c++ -Wall -Ofast -march=x86-64-v4 src/LU.cpp -mprefer-vector-width=256
+./doPerfStatGenoa 100 ./a.out >& data/LUv4w256
+c++ -Wall -Ofast -march=x86-64-v4 src/LU.cpp -mprefer-vector-width=128
+./doPerfStatGenoa 100 ./a.out >& data/LUv4w128
+c++ -Wall -O2 -march=x86-64-v4 src/LU.cpp
+./doPerfStatGenoa 100 ./a.out >& data/LUv4w1
+c++ -Wall -Ofast -march=x86-64-v3 src/LU.cpp -mprefer-vector-width=256
+./doPerfStatGenoa 100 ./a.out >& data/LUv3w256
+c++ -Wall -Ofast -march=x86-64-v2 src/LU.cpp -mprefer-vector-width=128
+./doPerfStatGenoa 100 ./a.out >& data/LUv2w128
+c++ -Wall -Ofast -march=x86-64 src/LU.cpp -mprefer-vector-width=128
+./doPerfStatGenoa 100 ./a.out >& data/LUv1w128
+c++ -Wall -O2 -march=x86-64 src/LU.cpp -mprefer-vector-width=128
+./doPerfStatGenoa 100 ./a.out >& data/LUv1w1
+
+grep "duration" data/LU*
