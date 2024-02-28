@@ -2,7 +2,7 @@ def parseOne(fname) :
   nop=0
   d ={}
   with open(fname) as f:
-    print('\n\n---++ '+fname)
+    print('\n\n## '+fname)
     for line in f:
       try:
         (wf, val, key) = line.split()
@@ -28,17 +28,19 @@ def parseOne(fname) :
   return do
 
 def doPrint(di) :
-  s = '|' + ' | '
+  s = '| counter |'
   for wf  in di['cycles'] :
     s+= ' ' + wf + ' |'
-  s += '|'
+  print(s)
+  s = '| :---- | '
+  for wf  in di['cycles'] :
+    s+= ' :----: |'
   print(s)
   for k in di :
-    s = '|' + k + ' | '
+    s = '| ' + k + ' |'
     for wf  in di[k] :
         v = di[k][wf]
         s+= ' ' + "{:6.4f}".format(v)  + ' | '
-    s += '|'
     print(s)
 
 
