@@ -16,4 +16,5 @@ c++ -Wall -Ofast -march=x86-64 src/LU.cpp -mprefer-vector-width=128
 c++ -Wall -O2 -march=x86-64 src/LU.cpp -mprefer-vector-width=128
 ./doPerfStatGenoa 100 ./a.out >& data/LUv1w1
 
-grep "duration" data/LU*
+grep "#" data/LUv* | sed 's/:u//g' | sed 's/:/ /g' | sed 's/,//g' | sed 's/\#.*//g' | sed 's/msec//g' | sed 's|data/||g' > data/PerfGenoaLU
+grep "duration" data/LU* | sed 's|data/||g' | sed 's/:/ /g' >> data/PerfGenoaLU
