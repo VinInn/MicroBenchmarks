@@ -14,13 +14,18 @@
    a 64-bit seed, we suggest to seed a splitmix64 generator and use its
    output to fill s. */
 
+#ifndef VECTOR_SIZE
 #ifdef __AVX512F__
-typedef uint64_t XoshiroVector __attribute__ ((vector_size (64)));
+#define VECTOR_SIZE 8
 #elif __AVX2__
-typedef uint64_t XoshiroVector __attribute__ ((vector_size (32)));
+#define VECTOR_SIZE=4
 #else
-typedef uint64_t XoshiroVector __attribute__ ((vector_size (16)));
+#define VECTOR_SIZE=2
 #endif
+#endif
+
+typedef uint64_t XoshiroVector __attribute__ ((vector_size (8*VECTOR_SIZE)));
+
 
 template <XoshiroType type, typename V> class Xoshiro;
 

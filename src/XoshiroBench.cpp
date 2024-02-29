@@ -11,6 +11,7 @@
 #include <iostream>
 #include <cassert>
 
+constexpr int batch = 512;
 
 
 inline
@@ -30,7 +31,7 @@ void doTestSoA()
       std::cout << "Testing engine with SoA "  << typeid(XoshiroType::TwoSums).name() << ' ' << std::endl;
 
 
-      xoshiroRNG::SOA<8> soa;
+      xoshiroRNG::SOA<VECTOR_SIZE> soa;
       xoshiroRNG::setSeed(soa,0);
       auto fgen = [&](uint32_t const * __restrict__ dummy, float *__restrict__ out, int N) {
         
@@ -48,14 +49,14 @@ void doTestSoA()
 
       long long N = 32 * 1000 * 1000;
       benchmark::TimeIt bench;
-      // fill in batch of 256
-      float rv[256];
+      // fill in batch of batch
+      float rv[batch];
       uint32_t dummy[1];
       for (int i = 0; i < N; ++i) {
-        bench(fgen, dummy, rv, 256);
+        bench(fgen, dummy, rv, batch);
       }
 
-      std::cout << N*256*14 << " int ops" << std::endl;
+      std::cout << N*batch*14 << " int ops" << std::endl;
       std::cout << "duration " << bench.lap() << std::endl;
 
 }
@@ -77,14 +78,14 @@ void doTestV(Engine & engine)
 
 
       benchmark::TimeIt bench;
-      // fill in batch of 256
-      uint64_t rv[256];
+      // fill in batch of batch
+      uint64_t rv[batch];
       uint64_t dummy[1];
       for (int i = 0; i < N; ++i) {
-           bench(gen, dummy, rv, 256);
+           bench(gen, dummy, rv, batch);
       }
       
-      std::cout << N*256*14 << " int ops" << std::endl;
+      std::cout << N*batch*14 << " int ops" << std::endl;
       std::cout << "duration " << bench.lap() << std::endl;
 
 
