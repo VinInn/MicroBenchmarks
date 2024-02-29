@@ -30,13 +30,20 @@ void doTestSoA()
       std::cout << "Testing engine with SoA "  << typeid(XoshiroType::TwoSums).name() << ' ' << std::endl;
 
 
-      xoshiroRNG::SOA<32> soa;
-      for ( auto & v : soa.v) v = (uint64_t*)malloc(soa.size*sizeof(uint64_t));
+      xoshiroRNG::SOA<8> soa;
       xoshiroRNG::setSeed(soa,0);
       auto fgen = [&](uint32_t const * __restrict__ dummy, float *__restrict__ out, int N) {
-        auto f = [&](int i, uint64_t r) { out[i] = r;};
-         xoshiroRNG::loop<XoshiroType::TwoSums>(soa, f, N);
-         // for(int k=0; k<soa.size; ++k) out[k] = xoshiroRNG::next<XoshiroType::TwoSums>(soa,k);
+        
+         auto ni = N/soa.size; 
+         for (int i = 0; i < ni; i++) {
+          int j=0;
+//           #pragma omp simd aligned(out:64)
+          for (int k=0; k<soa.size; ++k)
+            out[j++] = xoshiroRNG::nextPP(soa,k);
+         }
+         
+        // auto f = [&](int i, uint64_t r) { out[i] = r;};
+        // xoshiroRNG::loop<XoshiroType::TwoSums>(soa, f, N);
       };
 
       long long N = 32 * 1000 * 1000;

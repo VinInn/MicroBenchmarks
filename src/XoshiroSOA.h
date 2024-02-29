@@ -125,7 +125,7 @@ template<int N>
 struct SOA {
   constexpr uint64_t * operator[](int i) { return v[i];}
   constexpr uint64_t const * operator[](int i) const { return v[i];}
-  uint64_t* v[4];
+  uint64_t v[4][N];
   static constexpr int size = N;
 };
 
