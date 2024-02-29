@@ -1,2 +1,2 @@
-c++ -Wall -O3 -march=x86-64-v4 XoshiroBench.cpp -DTESTSOA -mprefer-vector-width=256
+c++ -Wall -O3 -march=x86-64-v4 XoshiroBench.cpp -DTESTSOA -mprefer-vector-width=256 -fopenmp-simd -DVECTOR_SIZE=8
 
