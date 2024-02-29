@@ -36,9 +36,9 @@ void doTestSoA()
       auto fgen = [&](uint32_t const * __restrict__ dummy, float *__restrict__ out, int N) {
         
          auto ni = N/soa.size; 
+         int j=0;
          for (int i = 0; i < ni; i++) {
-          int j=0;
-//           #pragma omp simd aligned(out:64)
+           #pragma omp simd aligned(out:64)
           for (int k=0; k<soa.size; ++k)
             out[j++] = xoshiroRNG::nextPP(soa,k);
          }

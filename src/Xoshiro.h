@@ -18,9 +18,9 @@
 #ifdef __AVX512F__
 #define VECTOR_SIZE 8
 #elif __AVX2__
-#define VECTOR_SIZE=4
+#define VECTOR_SIZE 4
 #else
-#define VECTOR_SIZE=2
+#define VECTOR_SIZE 2
 #endif
 #endif
 
