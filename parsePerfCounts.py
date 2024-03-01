@@ -44,4 +44,4 @@ def doPrint(di) :
     print(s)
 
 
-doPrint(parseOne('data/PerfGenoaLU'))
+doPrint(parseOne('data/fileToParse'))
