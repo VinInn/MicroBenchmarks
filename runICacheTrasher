@@ -1,0 +1,4 @@
+c++ -O0 icacheTrasher.cpp
+../doPerfStatRome 100 ./a.out
+c++ -O0 -march=native icacheTrasher.cpp
+../doPerfStatRome 100 ./a.out

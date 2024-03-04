@@ -67,9 +67,15 @@ int LU_factor(int M, int N, double **A, int *pivot);
 
 int main() {
 
-  int cycles = 64;
-  auto res = kernel_measureLU(cycles,1024);
-  std::cout << "LU flops " << res << std::endl;
+  int mult = 1;
+#ifdef LARGE
+  mult=4;  
+#endif
+  int size = mult*1024;
+  int cycles = 128/(mult*mult*mult);
+
+  auto res = kernel_measureLU(cycles,size);
+  std::cout << "LU flops for size " << size << " = " << res << std::endl;
 
 }
 
