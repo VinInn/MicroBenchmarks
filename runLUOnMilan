@@ -41,11 +41,11 @@ rm data/fileToParse
 
 rm data/LUsmallv*
 c++ -Wall -Ofast -march=x86-64-v3 src/LU.cpp -DSMALL -mprefer-vector-width=256
-./doPerfStatMilan 100 ./a.out >& data/LUsmallv4w256
+./doPerfStatMilan 100 ./a.out >& data/LUsmallv3w256
 c++ -Wall -Ofast -march=x86-64-v3 src/LU.cpp -DSMALL -mprefer-vector-width=128
-./doPerfStatMilan 100 ./a.out >& data/LUsmallv4w128
+./doPerfStatMilan 100 ./a.out >& data/LUsmallv3w128
 c++ -Wall -O2 -march=x86-64-v3 src/LU.cpp -DSMALL
-./doPerfStatMilan 100 ./a.out >& data/LUsmallv4w1
+./doPerfStatMilan 100 ./a.out >& data/LUsmallv3w1
 c++ -Wall -Ofast -march=x86-64-v2 src/LU.cpp -DSMALL -mprefer-vector-width=128
 ./doPerfStatMilan 100 ./a.out >& data/LUsmallv2w128
 c++ -Wall -Ofast -march=x86-64 src/LU.cpp -DSMALL -mprefer-vector-width=128
