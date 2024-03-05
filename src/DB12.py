@@ -57,6 +57,8 @@ def get_cpu_normalization(i, reference='HS06', iterations=1):
     cput = sum(end[:4]) - sum(start[:4])
     # wall = end[4] - start[4]
 
+    print(m,m2,p,p2)
+
     # if not cput:
     #     return S_ERROR( 'Can not get used CPU' )
 
