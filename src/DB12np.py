@@ -10,6 +10,7 @@ import logging
 import multiprocessing
 import os
 import random
+import numpy as np
 from os import path
 
 UNITS = {'HS06': 1., 'SI00': 1. / 344.}
@@ -33,25 +34,25 @@ def get_cpu_normalization(i, reference='HS06', iterations=1):
 
     # return S_ERROR( x )
 
-    # This number of iterations corresponds to 360 HS06 seconds
-    n = int(1000 * 1000 * 12.5)
+    # This number of iterations corresponds to 360 HS06 seconds for the standard version (no numpy)
+    n = int(1000 * 12.5)
     calib = 360.0 / UNITS[reference]
 
-    m = 0.
-    m2 = 0.
-    p = 0.
-    p2 = 0.
+    m = 0
+    m2 = 0
+    p = 0
+    p2 = 0
     # Do one iteration extra to allow CPUs with variable speed
     for i in range(iterations + 1):
         if i == 1:
             start = os.times()
         # Now the iterations
         for j in range(n):
-            t = random.normalvariate(10, 1)
-            m += t
-            m2 += t * t
-            p += t
-            p2 += t * t
+            t = np.random.normal(10, 1, 1000)
+            m += np.sum(t)
+            m2 += np.sum(t * t)
+            p += np.sum(t)
+            p2 += np.sum(t * t)
 
     end = os.times()
     cput = sum(end[:4]) - sum(start[:4])
