@@ -1,4 +1,11 @@
-c++ -O0 icacheTrasher.cpp
-../doPerfStatRome 100 ./a.out
-c++ -O0 -march=native icacheTrasher.cpp
-../doPerfStatRome 100 ./a.out
+rm  data/db12* data/icache*
+c++ -O0 src/icacheTrasher.cpp
+perf stat -ddd ./a.out >& data/icache${1}
+
+perf stat -ddd python3 src/DB12.py >& data/db12${1}
+
+perf stat -ddd python3 src/DB12np.py >& data/db12np${1}
+
+grep -H "#" data/db12* | sed 's/:u//g' | sed 's/:/ /g' | sed 's/,//g' | sed 's/\#.*//g' | sed 's/msec//g' | sed 's|data/||g' > data/Perf${1}MB1
+grep -H "#" data/icache* | sed 's/:u//g' | sed 's/:/ /g' | sed 's/,//g' | sed 's/\#.*//g' | sed 's/msec//g' | sed 's|data/||g' >> data/Perf${1}MB1
+
