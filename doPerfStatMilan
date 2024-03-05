@@ -17,8 +17,13 @@ perf stat -D $1 \
 -e all_data_cache_accesses \
 -e L1-dcache-load-misses -e L1-dcache-loads -e L1-dcache-prefetches \
 -e L1-icache-load-misses -e L1-icache-loads \
+-e l2_cache_accesses_from_dc_misses \
+-e l2_cache_hits_from_dc_misses -e l2_cache_misses_from_dc_misses \
 -e l3_cache_accesses -e l3_misses \
 -e dTLB-load-misses -e dTLB-loads \
+-e  ls_dispatch.ld_dispatch \
+-e  ls_dispatch.ld_st_dispatch \
+-e  ls_dispatch.store_dispatch \
 $2
 # -e kmem:mm_page_alloc_extfrag -e kmem:mm_page_alloc -e kmem:mm_page_free \
 #-e compaction:mm_compaction_try_to_compact_pages \

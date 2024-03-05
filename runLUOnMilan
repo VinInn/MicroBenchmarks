@@ -1,0 +1,60 @@
+rm data/LUv*
+c++ -Wall -Ofast -march=x86-64-v3 src/LU.cpp -mprefer-vector-width=256
+./doPerfStatMilan 100 ./a.out >& data/LUv3w256
+c++ -Wall -Ofast -march=x86-64-v3 src/LU.cpp -mprefer-vector-width=128
+./doPerfStatMilan 100 ./a.out >& data/LUv3w128
+c++ -Wall -O2 -march=x86-64-v3 src/LU.cpp
+./doPerfStatMilan 100 ./a.out >& data/LUv3w1
+c++ -Wall -Ofast -march=x86-64-v2 src/LU.cpp -mprefer-vector-width=128
+./doPerfStatMilan 100 ./a.out >& data/LUv2w128
+c++ -Wall -Ofast -march=x86-64 src/LU.cpp -mprefer-vector-width=128
+./doPerfStatMilan 100 ./a.out >& data/LUv1w128
+c++ -Wall -O2 -march=x86-64 src/LU.cpp -mprefer-vector-width=128
+./doPerfStatMilan 100 ./a.out >& data/LUv1w1
+
+grep "duration" data/LUv* | sed 's|data/||g' | sed 's/:/ /g' | awk '{print $1, $3, $2}' > data/PerfMilanLU
+grep "#" data/LUv* | sed 's/:u//g' | sed 's/:/ /g' | sed 's/,//g' | sed 's/\#.*//g' | sed 's/msec//g' | sed 's|data/||g' >> data/PerfMilanLU
+cp data/PerfMilanLU data/fileToParse
+python3 parsePerfCounts.py > PerfMilanLU.md
+rm data/fileToParse
+
+
+rm data/LUlargev*
+c++ -Wall -Ofast -march=x86-64-v3 src/LU.cpp -DLARGE -mprefer-vector-width=256
+./doPerfStatMilan 100 ./a.out >& data/LUlargev3w256
+c++ -Wall -Ofast -march=x86-64-v3 src/LU.cpp -DLARGE -mprefer-vector-width=128
+./doPerfStatMilan 100 ./a.out >& data/LUlargev3w128
+c++ -Wall -O2 -march=x86-64-v3 src/LU.cpp -DLARGE
+./doPerfStatMilan 100 ./a.out >& data/LUlargev3w1
+c++ -Wall -Ofast -march=x86-64-v2 src/LU.cpp -DLARGE -mprefer-vector-width=128
+./doPerfStatMilan 100 ./a.out >& data/LUlargev2w128
+c++ -Wall -Ofast -march=x86-64 src/LU.cpp -DLARGE -mprefer-vector-width=128
+./doPerfStatMilan 100 ./a.out >& data/LUlargev1w128
+c++ -Wall -O2 -march=x86-64 src/LU.cpp -DLARGE -mprefer-vector-width=128
+./doPerfStatMilan 100 ./a.out >& data/LUlargev1w1
+
+grep "duration" data/LUlargev* | sed 's|data/||g' | sed 's/:/ /g' | awk '{print $1, $3, $2}' > data/PerfMilanLUlarge
+grep "#" data/LUlargev* | sed 's/:u//g' | sed 's/:/ /g' | sed 's/,//g' | sed 's/\#.*//g' | sed 's/msec//g' | sed 's|data/||g' >> data/PerfMilanLUlarge
+cp data/PerfMilanLUlarge data/fileToParse
+python3 parsePerfCounts.py > PerfMilanLUlarge.md
+rm data/fileToParse
+
+rm data/LUsmallv*
+c++ -Wall -Ofast -march=x86-64-v3 src/LU.cpp -DSMALL -mprefer-vector-width=256
+./doPerfStatMilan 100 ./a.out >& data/LUsmallv4w256
+c++ -Wall -Ofast -march=x86-64-v3 src/LU.cpp -DSMALL -mprefer-vector-width=128
+./doPerfStatMilan 100 ./a.out >& data/LUsmallv4w128
+c++ -Wall -O2 -march=x86-64-v3 src/LU.cpp -DSMALL
+./doPerfStatMilan 100 ./a.out >& data/LUsmallv4w1
+c++ -Wall -Ofast -march=x86-64-v2 src/LU.cpp -DSMALL -mprefer-vector-width=128
+./doPerfStatMilan 100 ./a.out >& data/LUsmallv2w128
+c++ -Wall -Ofast -march=x86-64 src/LU.cpp -DSMALL -mprefer-vector-width=128
+./doPerfStatMilan 100 ./a.out >& data/LUsmallv1w128
+c++ -Wall -O2 -march=x86-64 src/LU.cpp -DSMALL -mprefer-vector-width=128
+./doPerfStatMilan 100 ./a.out >& data/LUsmallv1w1
+
+grep "duration" data/LUsmallv* | sed 's|data/||g' | sed 's/:/ /g' | awk '{print $1, $3, $2}' > data/PerfMilanLUsmall
+grep "#" data/LUsmallv* | sed 's/:u//g' | sed 's/:/ /g' | sed 's/,//g' | sed 's/\#.*//g' | sed 's/msec//g' | sed 's|data/||g' >> data/PerfMilanLUsmall
+cp data/PerfMilanLUsmall data/fileToParse
+python3 parsePerfCounts.py > PerfMilanLUsmall.md
+rm data/fileToParse
