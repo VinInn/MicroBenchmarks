@@ -1,0 +1,24 @@
+
+c++ -Wall -Ofast -march=x86-64-v4 src/LU.cpp -DSMALL -mprefer-vector-width=512
+./doPerfStatGenoa 100 ./a.out >& data/LUsmallv4w512
+c++ -Wall -Ofast -march=x86-64-v4 src/LU.cpp -DSMALL -mprefer-vector-width=256
+./doPerfStatGenoa 100 ./a.out >& data/LUsmallv4w256
+c++ -Wall -Ofast -march=x86-64-v4 src/LU.cpp -DSMALL -mprefer-vector-width=128
+./doPerfStatGenoa 100 ./a.out >& data/LUsmallv4w128
+c++ -Wall -O2 -march=x86-64-v4 src/LU.cpp -DSMALL
+./doPerfStatGenoa 100 ./a.out >& data/LUsmallv4w1
+c++ -Wall -Ofast -march=x86-64-v3 src/LU.cpp -DSMALL -mprefer-vector-width=256
+./doPerfStatGenoa 100 ./a.out >& data/LUsmallv3w256
+c++ -Wall -Ofast -march=x86-64-v2 src/LU.cpp -DSMALL -mprefer-vector-width=128
+./doPerfStatGenoa 100 ./a.out >& data/LUsmallv2w128
+c++ -Wall -Ofast -march=x86-64 src/LU.cpp -DSMALL -mprefer-vector-width=128
+./doPerfStatGenoa 100 ./a.out >& data/LUsmallv1w128
+c++ -Wall -O2 -march=x86-64 src/LU.cpp -DSMALL -mprefer-vector-width=128
+./doPerfStatGenoa 100 ./a.out >& data/LUsmallv1w1
+
+grep "duration" data/LUsmallv* | sed 's|data/||g' | sed 's/:/ /g' | awk '{print $1, $3, $2}' > data/PerfGenoaLUsmall
+grep "#" data/LUsmallv* | sed 's/:u//g' | sed 's/:/ /g' | sed 's/,//g' | sed 's/\#.*//g' | sed 's/msec//g' | sed 's|data/||g' >> data/PerfGenoaLUsmall
+cp data/PerfGenoaLUsmall data/fileToParse
+python3 parsePerfCounts.py
+rm data/fileToParse
+

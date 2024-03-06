@@ -1,0 +1,28 @@
+perf stat -D $1 \
+-e task-clock -e cycles \
+-e stalled-cycles-backend -e stalled-cycles-frontend \
+-e iTLB-load-misses -e iTLB-loads \
+-e instructions -e branch-instructions -e branch-misses \
+-e ex_ret_cops -e ex_div_busy -e ex_ret_mmx_fp_instr.sse_instr \
+-e fp_ret_sse_avx_ops.all \
+-e fp_ret_sse_avx_ops.add_sub_flops \
+-e fp_ret_sse_avx_ops.mac_flops \
+-e fp_ret_sse_avx_ops.mult_flops \
+-e fp_ret_sse_avx_ops.div_flops \
+-e cache-misses -e cache-references \
+-e all_dc_accesses \
+-e L1-dcache-load-misses -e L1-dcache-loads -e L1-dcache-prefetches \
+-e l2_cache_misses_from_dc_misses \
+-e L1-icache-load-misses -e L1-icache-loads \
+-e ls_dispatch.ld_dispatch \
+-e ls_dispatch.ld_st_dispatch \
+-e ls_dispatch.store_dispatch \
+-e dTLB-load-misses -e dTLB-loads \
+$2
+# -e kmem:mm_page_alloc_extfrag -e kmem:mm_page_alloc -e kmem:mm_page_free \
+#-e compaction:mm_compaction_try_to_compact_pages \
+#-e huge_memory:mm_collapse_huge_page \
+# $1
+#-e de_dis_cops_from_decoder.disp_op_type.any_fp_dispatch \
+#-e de_dis_cops_from_decoder.disp_op_type.any_integer_dispatch \
+#-e l3_cache_accesses -e l3_misses \
