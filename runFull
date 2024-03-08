@@ -1,0 +1,6 @@
+sudo  ~/MicroBenchmarks/doPerfStat${1} "100 -a"&
+# ~/patatrack-scripts/benchmark -e 8000 -j 4 -t 32 -s 24 -g 0  --no-warmup --tmpdir workdir reference.py
+# ~/patatrack-scripts/benchmark -e 4000 -j 4 -t 32 -s 24 -g 0  --no-warmup --tmpdir workdir --no-run-io-benchmark reference.py
+sleep 60
+sudo killall -6 perf
+
