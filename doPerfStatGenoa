@@ -28,6 +28,9 @@ perf stat -D $1 \
 -e all_data_cache_accesses \
 -e L1-dcache-load-misses -e L1-dcache-loads -e L1-dcache-prefetches \
 -e L1-icache-load-misses -e L1-icache-loads \
+-e l2_cache_req_stat.all \
+-e l2_cache_req_stat.ic_dc_hit_in_l2 \
+-e l2_cache_req_stat.ic_dc_miss_in_l2 \
 -e ls_dispatch.ld_dispatch \
 -e ls_dispatch.ld_st_dispatch \
 -e ls_dispatch.store_dispatch \
