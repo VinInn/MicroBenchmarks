@@ -35,7 +35,7 @@ def get_cpu_normalization(i, reference='HS06', iterations=1):
     # return S_ERROR( x )
 
     # This number of iterations corresponds to 3600 HS06 seconds for the standard version (no numpy)
-    n = int(10000 * 12.5)
+    n = int(2000 * 12.5)
     calib = 3600.0 / UNITS[reference]
 
     m = 0
@@ -48,7 +48,7 @@ def get_cpu_normalization(i, reference='HS06', iterations=1):
             start = os.times()
         # Now the iterations
         for j in range(n):
-            t = np.random.normal(10, 1, 1000)
+            t = np.random.normal(10, 1, 5000)
             m += np.sum(t)
             m2 += np.sum(t * t)
             p += np.sum(t)
