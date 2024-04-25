@@ -1,0 +1,4 @@
+sudo perf stat --topdown -e cycles -e instructions &
+$1
+sudo killall -6 perf
+
