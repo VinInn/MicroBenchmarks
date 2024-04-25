@@ -1,0 +1,11 @@
+perf stat -e cycles -e instructions \
+-M  total_dispatch_slots \
+-M bad_speculation \
+-M  frontend_bound \
+-M  backend_bound \
+-M  bad_speculation \
+-M  frontend_bound \
+-M  retiring \
+-M  backend_bound_cpu \
+-M  backend_bound_memory \
+$1

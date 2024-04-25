@@ -12,7 +12,8 @@ perf stat -D $1 \
 -e cache-misses -e cache-references \
 -e all_dc_accesses \
 -e L1-dcache-load-misses -e L1-dcache-loads -e L1-dcache-prefetches \
--e l2_cache_misses_from_dc_misses \
+-e l2_cache_accesses_from_dc_misses \
+-e l2_cache_hits_from_dc_misses -e l2_cache_misses_from_dc_misses \
 -e L1-icache-load-misses -e L1-icache-loads \
 -e ls_dispatch.ld_dispatch \
 -e ls_dispatch.ld_st_dispatch \
