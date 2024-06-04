@@ -1,0 +1,24 @@
+perf stat -D $1 \
+-e task-clock -e cycles \
+-e stalled-cycles-backend -e stalled-cycles-frontend \
+-e iTLB-load-misses -e iTLB-loads \
+-e instructions -e branch-instructions -e branch-misses \
+-e ex_ret_instr -e ex_ret_ops -e ex_div_busy \
+-e ex_ret_mmx_fp_instr.sse_instr \
+-e fp_ret_sse_avx_ops.all \
+-e fp_ret_sse_avx_ops.add_sub_flops \
+-e fp_ret_sse_avx_ops.mult_flops \
+-e fp_ret_sse_avx_ops.mac_flops \
+-e fp_ret_sse_avx_ops.div_flops \
+-e cache-misses -e cache-references \
+-e all_data_cache_accesses \
+-e L1-dcache-load-misses -e L1-dcache-loads -e L1-dcache-prefetches \
+-e L1-icache-load-misses -e L1-icache-loads \
+-e l2_fill_pending.l2_fill_busy \
+-e l2_cache_req_stat.ic_dc_hit_in_l2 \
+-e l2_cache_req_stat.ic_dc_miss_in_l2 \
+-e ls_dispatch.ld_dispatch \
+-e ls_dispatch.ld_st_dispatch \
+-e ls_dispatch.store_dispatch \
+-e dTLB-load-misses -e dTLB-loads \
+$2
